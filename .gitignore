@@ -1,0 +1,32 @@
+# Maven target
+target/
+
+# Logs
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# WebDriver binaries
+src/main/resources/drivers/
+
+# Allure results
+.allure
+allure-results/
+reports/allure-report/
+
+

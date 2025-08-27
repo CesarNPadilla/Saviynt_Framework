@@ -1,0 +1,23 @@
+stages:
+  - test
+  - report
+
+variables:
+  MAVEN_CLI_OPTS: "-B -V"
+
+test:
+  image: maven:3.9-jdk-21
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS clean test
+  artifacts:
+    paths:
+      - allure-results/
+
+report:
+  image: openjdk:21
+  stage: report
+  dependencies:
+    - test
+  script:
+    - mvn io.qameta.allure:allure-maven:serve

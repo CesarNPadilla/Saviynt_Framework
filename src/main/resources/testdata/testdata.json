@@ -1,0 +1,22 @@
+{
+  "dev": { 
+    "url": "https://acnllp-development.saviyntcloud.com/ECM/",
+    "validUser": { "username": "cesar.padilla", "password": "Pswd01saviynt@" },
+    "invalidUser": { "username": "dev_invalid", "password": "dev_wrong" }
+  },
+  "qa": {
+    "url": "https://acnllp-qa.saviyntcloud.com/ECM/",
+    "validUser": { "username": "qauser", "password": "Qa@123" },
+    "invalidUser": { "username": "qa_invalid", "password": "qa_wrong" }
+  },
+  "staging": {
+    "url": "https://acnllp-staging.saviyntcloud.com/ECM/",
+    "validUser": { "username": "staginguser", "password": "Staging@123" },
+    "invalidUser": { "username": "staging_invalid", "password": "staging_wrong" }
+  },
+  "prod": {
+    "url": "https://acnllp-prod.saviyntcloud.com/ECM/",
+    "validUser": { "username": "produser", "password": "Prod@123" },
+    "invalidUser": { "username": "prod_invalid", "password": "prod_wrong" }
+  }
+}
