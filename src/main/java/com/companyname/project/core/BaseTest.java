@@ -1,17 +1,17 @@
 package com.companyname.project.core;
 
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.TimeoutException;
-
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
 
 public class BaseTest {
     protected static final ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
@@ -90,6 +90,24 @@ public class BaseTest {
         if (!getCurrentPageStateId(driver).equals(initialPageState)) {
             waitForPageReload();
         }
+    }
+
+        public static boolean navigateToHomePage() {
+        WebDriver driver = DriverFactory.getDriver();
+
+        String url = EnvironmentLoader.get("url");
+        driver.get(url);
+        
+        //String initialPageState = getCurrentPageStateId(driver); // Store initial state
+
+        //WebElement mainLogo = driver.findElement(By.xpath("//img[@alt='App Logo']"));
+        //mainLogo.click();
+
+        // Only wait if page actually reloads
+        //if (!getCurrentPageStateId(driver).equals(initialPageState)) {
+        //    waitForPageReload();
+        //}
+        return true;
     }
     
     public static List<WebElement> getAllMenuItems() {

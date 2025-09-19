@@ -1,12 +1,16 @@
 package com.companyname.project.bdd.stepdefinitions;
 
-import io.cucumber.java.en.*;
-import com.companyname.project.pages.LoginPage;
+import static org.testng.Assert.assertTrue;
+
 import com.companyname.project.core.BaseTest;
 import com.companyname.project.core.DriverFactory;
 import com.companyname.project.core.EnvironmentLoader;
+import com.companyname.project.pages.LoginPage;
 
-import static org.testng.Assert.assertTrue;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class LoginSteps {
     private LoginPage loginPage = new LoginPage(DriverFactory.getDriver());
@@ -37,13 +41,13 @@ public class LoginSteps {
 
     @Then("I should see a welcome message")
     public void i_should_see_a_welcome_message() {
+        BaseTest.waitForPageReload();
         assertTrue(loginPage.isWelcomeMessageDisplayed(), "Welcome message not displayed");
     }
 
     @When("I select the {string} menu item")
     public void selectMainMenuItem(String menuItem) {
         assertTrue(BaseTest.selectMenuItem(menuItem), "Menu item '" + menuItem + "' was not found");
-        //assertTrue(true, "Step completed without validation"); 
     }
 
     @And("I navigate to {string}")
@@ -52,9 +56,13 @@ public class LoginSteps {
         assertTrue(true, "Navigation to '" + menuItem + "' failed"); 
     }
 
+    @And("I navigate to HomePage")
+    public void navigateToHomePage() {
+        BaseTest.navigateToHomePage();
+    }
+
     @Then("I should see the {string} page")
     public void i_should_see_a_page(String page) {
         assertTrue(BaseTest.isPagePresent(page), "Page was not visible");
-        //assertTrue(true, "Step completed without validation"); 
     }
 }
