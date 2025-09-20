@@ -1,23 +1,44 @@
+image: maven:3.9.6-eclipse-temurin-17  # Java 17 + Maven
+
 stages:
   - test
   - report
 
 variables:
-  MAVEN_CLI_OPTS: "-B -V"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  ALLURE_RESULTS: "target/allure-results"
+  ALLURE_REPORT: "target/allure-report"
 
-test:
-  image: maven:3.9-jdk-21
+cache:
+  key: ${CI_PROJECT_NAME}
+  paths:
+    - .m2/repository
+    - target
+
+before_script:
+  - echo "Using Java version:"
+  - java -version
+  - mvn -version
+
+test-job:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS clean test
   artifacts:
+    when: always
     paths:
-      - allure-results/
+      - $ALLURE_RESULTS
+      - target/cucumber-reports/
+      - target/surefire-reports/
+    expire_in: 7 days
 
-report:
-  image: openjdk:21
+allure-report:
   stage: report
-  dependencies:
-    - test
+  image: frankescobar/allure-docker-service:latest
   script:
-    - mvn io.qameta.allure:allure-maven:serve
+    - allure generate $ALLURE_RESULTS -o $ALLURE_REPORT --clean
+  artifacts:
+    paths:
+      - $ALLURE_REPORT
+    expire_in: 7 days
+  needs: ["test-job"]
