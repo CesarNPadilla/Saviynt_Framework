@@ -17,7 +17,7 @@ before_script:
   - mvn -version
 
 cache:
-  key: "${CI_COMMIT_REF_SLUG}
+  key: "${CI_COMMIT_REF_SLUG}"
   paths:
     - .m2/repository
 
