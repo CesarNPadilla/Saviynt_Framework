@@ -16,7 +16,7 @@ Feature: Health Check
         Then I should be redirected to the Home page
         And I should see a welcome message
 
-    @healthcheck
+    @healthcheck @debug
     Scenario: Logs verification
         And I select the "Admin" menu item
         And I navigate to "Admin Function"

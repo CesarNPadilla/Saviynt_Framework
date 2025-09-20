@@ -19,7 +19,7 @@ import io.cucumber.testng.CucumberOptions;
                 "summary"
         },
         monochrome = true,                                 // Clean console output
-        tags = "@healthcheck"                              // Run only scenarios tagged @smoke
+        tags = "@debug"                              // Run only scenarios tagged @smoke
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
         @Override
