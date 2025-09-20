@@ -1,15 +1,15 @@
 package com.companyname.project.core;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.time.Duration;
+import java.util.Objects;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-import java.time.Duration;
-import java.util.Objects;
-//import java.util.concurrent.TimeUnit;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 
@@ -21,6 +21,12 @@ public class DriverFactory {
             boolean headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
             int implicitWait = Integer.parseInt(System.getProperty("implicitWait", "10"));
             int pageLoadTimeout = Integer.parseInt(System.getProperty("pageLoadTimeout", "30"));
+
+            // Force headless if running inside GitLab CI
+            boolean isCI = System.getenv("CI") != null;
+            if (isCI) {
+                headless = true;
+            }
 
             switch (browser.toLowerCase()) {
                 case "firefox":
@@ -35,12 +41,15 @@ public class DriverFactory {
                 case "chrome":
                 default:
                     WebDriverManager.chromedriver()
-                        .browserVersion("139.0.7258.128") // explicitly match your Chrome version
+                        //.browserVersion("139.0.7258.128") // explicitly match your Chrome version
                         .setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
-                        chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-logging"});
+                    chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-logging"});
                     if (headless) {
                         chromeOptions.addArguments("--headless=new");
+                        chromeOptions.addArguments("--no-sandbox");
+                        chromeOptions.addArguments("--disable-dev-shm-usage");
+                        chromeOptions.addArguments("--disable-gpu");
                     }
                     driver.set(new ChromeDriver(chromeOptions));
                     break;

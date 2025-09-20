@@ -1,44 +1,33 @@
-image: maven:3.9.6-eclipse-temurin-17  # Java 17 + Maven
+image: maven:3.9.6-eclipse-temurin-17
 
 stages:
   - test
-  - report
 
 variables:
-  MAVEN_CLI_OPTS: "--batch-mode"
-  ALLURE_RESULTS: "target/allure-results"
-  ALLURE_REPORT: "target/allure-report"
-
-cache:
-  key: ${CI_PROJECT_NAME}
-  paths:
-    - .m2/repository
-    - target
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "-B -e -U"
 
 before_script:
-  - echo "Using Java version:"
+  # Install Chrome for Selenium
+  - apt-get update && apt-get install -y wget gnupg unzip curl
+  - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+  - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+  - apt-get update && apt-get install -y google-chrome-stable
   - java -version
   - mvn -version
+
+cache:
+  paths:
+    - .m2/repository
 
 test-job:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS clean test
+    - mvn clean test -Dbrowser=chrome -Denv=dev
   artifacts:
     when: always
     paths:
-      - $ALLURE_RESULTS
+      - target/allure-results
       - target/cucumber-reports/
       - target/surefire-reports/
-    expire_in: 7 days
-
-allure-report:
-  stage: report
-  image: frankescobar/allure-docker-service:latest
-  script:
-    - allure generate $ALLURE_RESULTS -o $ALLURE_REPORT --clean
-  artifacts:
-    paths:
-      - $ALLURE_REPORT
-    expire_in: 7 days
-  needs: ["test-job"]
+    expire_in: 1 week
