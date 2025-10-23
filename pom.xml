@@ -18,8 +18,9 @@
     <name>Automation Framework</name>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <cucumber.version>7.23.0</cucumber.version>
         <selenium.version>4.14.0</selenium.version>
         <testng.version>7.7.1</testng.version>
@@ -120,6 +121,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
+                    <!-- Use release to ensure bytecode and API usage targets Java 21 -->
+                    <release>${maven.compiler.release}</release>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                 </configuration>
