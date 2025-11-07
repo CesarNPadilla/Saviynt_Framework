@@ -54,7 +54,7 @@ public class BaseTest {
             js.executeScript("arguments[0].setAttribute('style', arguments[1]);", element, "border: 3px solid orange; transition: border 0.3s;");
             Thread.sleep(300);
             js.executeScript("arguments[0].setAttribute('style', arguments[1]);", element, originalStyle);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             System.err.println("Couldn't animate highlight: " + e.getMessage());
         }
     }
@@ -147,7 +147,6 @@ public class BaseTest {
                     //System.out.println("Locator Found: " + possibleLocators);
             
                 } catch (TimeoutException e) {
-                    continue;
                 }
             }
             return true;

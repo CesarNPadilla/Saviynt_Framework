@@ -1,7 +1,7 @@
 {
   "dev": { 
     "url": "https://acnllp-development.saviyntcloud.com/ECM/",
-    "validUser": { "username": "cesar.padilla", "password": "Pswd01saviynt@" },
+    "validUser": { "username": "devuser", "password": "Dev@123" },
     "invalidUser": { "username": "dev_invalid", "password": "dev_wrong" }
   },
   "qa": {
