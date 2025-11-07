@@ -78,18 +78,12 @@ public class BaseTest {
     }
 
     public static void  navigateToMenuItem(String menuText) {
-        WebDriver driver = DriverFactory.getDriver();
-        String initialPageState = getCurrentPageStateId(driver); // Store initial state
 
         WebElement menu = wait.get().until(ExpectedConditions.visibilityOfElementLocated(MENU_CONTAINER));
         WebElement menuItem = menu.findElement(By.xpath(".//span[normalize-space()='" + menuText + "']"));
         highlightElement(menuItem);
         wait.get().until(ExpectedConditions.elementToBeClickable(menuItem)).click();
 
-        // Only wait if page actually reloads
-        if (!getCurrentPageStateId(driver).equals(initialPageState)) {
-            waitForPageReload();
-        }
     }
 
         public static boolean navigateToHomePage() {
