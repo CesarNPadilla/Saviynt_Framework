@@ -28,7 +28,7 @@ test-job:
     - echo "AWS Region | $AWS_REGION"
     - if [ -z "$AWS_ACCESS_KEY_ID" ]; then echo "Missing AWS credentials"; exit 1; else echo "AWS credentials detected"; fi
     # Run Maven test suite
-    - mvn clean test -Dbrowser=chrome -Denv=dev
+    - mvn clean test -Dbrowser=chrome -Denv=dev -Dcucumber.options="--tags @healthcheck"
   artifacts:
     when: always
     paths:

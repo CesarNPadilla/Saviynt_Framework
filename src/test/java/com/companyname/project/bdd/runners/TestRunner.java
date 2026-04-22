@@ -5,25 +5,22 @@ import org.testng.annotations.DataProvider;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
-@CucumberOptions(
-        features = "src/test/resources/features",          // Path to feature files
-        glue = {
-                "com.companyname.project.bdd.stepdefinitions", 
-                "com.companyname.project.bdd.hooks"
-        },
-        plugin = {
-                "pretty",                                  // Console output
-                "html:target/cucumber-reports/cucumber.html",               // HTML report
-                "json:target/cucumber-reports/cucumber.json",               // JSON report
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm", // Allure
-                "summary"
-        },
-        monochrome = true,                                 // Clean console output
-        tags = "@debug"                              // Run only scenarios tagged @smoke
+@CucumberOptions(features = "src/test/resources/features", // Path to feature files
+                glue = {
+                                "com.companyname.project.bdd.stepdefinitions",
+                                "com.companyname.project.bdd.hooks"
+                }, plugin = {
+                                "pretty", // Console output
+                                "html:target/cucumber-reports/cucumber.html", // HTML report
+                                "json:target/cucumber-reports/cucumber.json", // JSON report
+                                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm", // Allure
+                                "summary"
+                }, monochrome = true, // Clean console output
+                tags = "@healthcheck" // Run only scenarios tagged @smoke, @healthcheck
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
         @Override
-        @DataProvider (parallel = true)
+        @DataProvider(parallel = false)
         public Object[][] scenarios() {
                 return super.scenarios();
         }

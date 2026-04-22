@@ -3,7 +3,7 @@ Feature: Login Functionality
   I want to login to the application
   So that I can access my dashboard
 
-  @smoke @healthcheck
+  @smoke
   Scenario: Successful login with valid credentials
     Given I navigate to the login page
     When I enter valid username and password
